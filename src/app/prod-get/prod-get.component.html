@@ -1,0 +1,20 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Price</td>
+            <td>Company</td>
+            <td colspan="2">Actions</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let prod of prods">
+            <td>{{ prod.name }}</td>
+            <td>{{ prod.price }}</td>
+            <td>{{ prod.company }}</td>
+            <td><button (click)="deleteProduct(prod)" class="btn btn-danger"> Delete</button> </td>
+            <td><button (click)="updateProduct(prod)" class="btn btn-primary"> Edit</button></td>
+        </tr>
+    </tbody>
+</table>
