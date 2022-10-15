@@ -1,9 +1,3 @@
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/";
-var mongodb = require('mongodb');
-var ObjectId = mongodb.ObjectId;
-
-
 exports.insert = function(req, res) {
     MongoClient.connect(url, {
         useNewUrlParser: true

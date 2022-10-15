@@ -4,6 +4,12 @@ const bodyParser = require('body-parser');
 const app = express();
 const http = require('http').Server(app);
 
+//Setup mongodb
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017";
+var mongodb = require('mongodb');
+var ObjectId = mongodb.ObjectId;
+
 // parse requests
 app.use(bodyParser.urlencoded({
     extended: true
@@ -11,6 +17,19 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 cors = require('cors'),
     app.use(cors());
+
+
+MongoClient.connect(url, function(err, client) {
+    if (err) {return console.log(err)}
+        const dbName = 'products';
+        const db = client.db(dbName);
+
+        const products = require('./operations');
+        app.post('/productInsert', products.insert);
+        app.get('/productFind', products.find);
+        app.put('/productUpdate', products.update);
+        app.post('/productDelete', products.delete);
+})
 
 //Enable CORS for all HTTP methods
 /*
@@ -22,11 +41,11 @@ app.use(function(req, res, next) {
 });
 */
 
-const products = require('./operations');
-app.post('/productInsert', products.insert);
-app.get('/productFind', products.find);
-app.put('/productUpdate', products.update);
-app.post('/productDelete', products.delete);
+// const products = require('./operations');
+// app.post('/productInsert', products.insert);
+// app.get('/productFind', products.find);
+// app.put('/productUpdate', products.update);
+// app.post('/productDelete', products.delete);
 
 // const https = require('https'),
 //     fs = require('fs'),
